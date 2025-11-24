@@ -1,5 +1,5 @@
 import { expect } from "bun:test";
-import { test, describe } from "@otr/bun-test";
+import { test, describe } from "@otel-test-runner/bun-test";
 
 import { connect, connection, dag } from "@dagger.io/dagger";
 

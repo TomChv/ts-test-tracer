@@ -4,7 +4,7 @@ Utility libraries to automatically trace tests inside `dagger run`.
 
 ### Integration
 
-- [x] Bun (`@otr/bun-test`)
+- [x] Bun (`@otel-test-runner/bun-test`)
 - [ ] Jest
 - [ ] Mocha
 - [ ] Deno

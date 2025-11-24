@@ -1,15 +1,5 @@
-# otel
+# Otel test runner instrumentation
 
-To install dependencies:
+A utility package for [otel-test-runner](https://github.com/TomChv/ts-test-tracer) to automatically trace tests inside `dagger run` or `dagger call`.
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.3.0. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+This package handle OTEL configuration for upper-level integration with tests runners.

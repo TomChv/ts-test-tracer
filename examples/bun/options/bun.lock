@@ -2,11 +2,9 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "@otel-test-runner/bun-test",
-      "dependencies": {
-        "@otel-test-runner/instrumentation": "0.0.2",
-      },
+      "name": "options",
       "devDependencies": {
+        "@otel-test-runner/bun-test": "^0.0.2",
         "@types/bun": "latest",
       },
       "peerDependencies": {
@@ -76,6 +74,8 @@
     "@opentelemetry/sdk-trace-node": ["@opentelemetry/sdk-trace-node@2.2.0", "", { "dependencies": { "@opentelemetry/context-async-hooks": "2.2.0", "@opentelemetry/core": "2.2.0", "@opentelemetry/sdk-trace-base": "2.2.0" }, "peerDependencies": { "@opentelemetry/api": ">=1.0.0 <1.10.0" } }, "sha512-+OaRja3f0IqGG2kptVeYsrZQK9nKRSpfFrKtRBq4uh6nIB8bTBgaGvYQrQoRrQWQMA5dK5yLhDMDc0dvYvCOIQ=="],
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
+
+    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.2", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.2" }, "peerDependencies": { "typescript": "^5" } }, "sha512-ZxCqd/zn9+crQXXMw4bHwXXPzW6Ml9IhFZxBkwIhs9gmA5WP5aLU+295Pt+tnq3onm2ZPMlk7I7dR4YB4HSQIQ=="],
 
     "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.2", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-bidoB5sVovCv9NQdGyyGtmP98QILYQHTO0gWAvxANz4IvIVVCUb6NWOSpcUXJwIvOw9eOy7nr6Kk4VxrfnBELg=="],
 

@@ -1,6 +1,6 @@
 import * as bunTest from "bun:test";
 import { context, trace, type Context, type Span } from "@opentelemetry/api";
-import * as otr from "@otr/instrumentation";
+import * as otr from "@otel-test-runner/instrumentation";
 
 /**
  * On import, we automatically initialize telemetry so spans
@@ -13,9 +13,9 @@ otr.initialize();
  * This hook is automatically register on Bun tests runners
  * when imported
  */
-export const afterAll = async () => {
+bunTest.afterAll(async () => {
   await otr.close();
-};
+});
 
 const tracer = otr.getTracer("test-tracer/bun");
 
@@ -33,7 +33,7 @@ async function runTestInsideSpan<T>(
 ): Promise<T> {
   const currentCtx = context.active();
 
-  if (trace.getSpan(currentCtx) !== undefined) {
+  if (trace.getSpan(currentCtx) === undefined) {
     return await context.with(otr.injectTraceParentInContext(), async () => {
       return tracer.startActiveSpan(name, async () => fn());
     });

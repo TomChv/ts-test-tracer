@@ -1,5 +1,5 @@
 import { expect } from "bun:test";
-import { test, describe } from "bun-otel-test";
+import { test, describe } from "@otel-test-runner/bun-test";
 
 test("simple", async () => {
   expect(1 + 1).toBe(2);

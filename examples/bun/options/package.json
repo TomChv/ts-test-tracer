@@ -1,16 +1,13 @@
 {
-  "name": "dagger",
+  "name": "options",
   "module": "index.ts",
   "type": "module",
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
-    "@otel-test-runner/bun-test": "0.0.2"
+    "@otel-test-runner/bun-test": "^0.0.2"
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "@dagger.io/dagger": "^0.19.7"
   }
 }

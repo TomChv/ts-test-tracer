@@ -1,10 +1,10 @@
 {
-  "name": "@otr/bun-test",
+  "name": "@otel-test-runner/bun-test",
   "module": "index.ts",
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -12,6 +12,10 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@otr/instrumentation": "../instrumentation"
+    "@otel-test-runner/instrumentation": "0.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TomChv/ts-test-tracer/tree/main/packages/bun-test"
   }
 }
