@@ -1,0 +1,17 @@
+{
+  "name": "@otr/bun-test",
+  "module": "index.ts",
+  "type": "module",
+  "author": "TomChv",
+  "license": "MIT",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@otr/instrumentation": "../instrumentation"
+  }
+}

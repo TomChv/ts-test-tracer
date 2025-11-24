@@ -1,0 +1,17 @@
+{
+  "name": "@otr/instrumentation",
+  "module": "index.ts",
+  "type": "module",
+  "author": "TomChv",
+  "license": "MIT",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@opentelemetry/sdk-node": "^0.208.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "dagger",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@dagger.io/dagger": "^0.19.7",
+    "@otr/bun-test": "../../../packages/bun-test"
+  }
+}
