@@ -34,7 +34,6 @@ export class Packages {
         "packages/*/node_modules",
         "packages/*/assets",
         "packages/*/.gitignore",
-        "packages/*/*.md",
       ],
     })
     packageCodeWorkspace: Directory,
@@ -64,7 +63,9 @@ export class Packages {
       });
 
     if (!install) {
-      return ctr;
+      return ctr.withDirectory(".", this.packageCodeWorkspace, {
+        include: ["**/*.ts", "**/tsconfig.json", "**/*.md"],
+      });
     }
 
     for (const pkg of await this.packages()) {
@@ -161,6 +162,26 @@ export class Packages {
     );
   }
 
+  @func()
+  async updateLockfiles(): Promise<Changeset> {
+    let devContainer = await this.devContainer();
+
+    const originalWorkspace = devContainer.directory("/src");
+    const packages = await this.packages();
+
+    // Bump packages version
+    for (const pkg of packages) {
+      await getTracer().startActiveSpan(`update ${pkg} lockfiles`, async () => {
+        devContainer = await devContainer
+          .withWorkdir(`/src/packages/${pkg}`)
+          .withExec(["bun", "install", "--lockfile-only"])
+          .sync();
+      });
+    }
+
+    return devContainer.directory("/src").changes(originalWorkspace);
+  }
+
   /**
    * Bump packages to the given version.
    *
@@ -202,8 +223,6 @@ export class Packages {
               "set",
               `dependencies[@otel-test-runner/instrumentation]=${version}`,
             ])
-            // Update lockfile
-            .withExec(["bun", "install", "--lockfile-only"])
             .sync();
         },
       );

@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "dagger",
@@ -7,7 +8,7 @@
         "@dagger.io/dagger": "^0.19.7",
       },
       "devDependencies": {
-        "@otel-test-runner/bun-test": "0.0.3",
+        "@otel-test-runner/bun-test": "0.0.5",
         "@types/bun": "latest",
       },
       "peerDependencies": {
@@ -88,9 +89,9 @@
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
 
-    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.3", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.3" }, "peerDependencies": { "typescript": "^5" } }, "sha512-IJ3dz455iFSW2qluHolD20mqXLursZtQOMszQrBgmsfNCOl3MVn73Vj4eZ02mHmgAZobfIvN5W2So2Z2o3e9ww=="],
+    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.5", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.5" }, "peerDependencies": { "typescript": "^5" } }, "sha512-OCVDypJ3JvbYx2dGQy0wOrXfnb/rbF4B1HPajut0F3iTtdOLXnoGWjPqygEqyeF07/kPsmrUQWbQLmqaV1/uqw=="],
 
-    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.3", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-h7vNJVtPy/07vEjK61VDB5PGyGe7WqR5+cTtTuKoC+xn8ZY4BtLMj2iHq1FCfKdbE6LSRHUI6pjqnPWNcU2fxw=="],
+    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.5", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-obw2xqrNJl4zsY81xAEWWMMVgO2Xx4ZluzQihJ5ZA6otRBaUnEfVZM2e/qYG64zfsEtK8XBR8wVim+i48huq0A=="],
 
     "@protobufjs/aspromise": ["@protobufjs/aspromise@1.1.2", "", {}, "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="],
 

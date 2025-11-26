@@ -118,7 +118,7 @@ export class Examples {
     await Promise.all(
       examples.map(async (example) => {
         await getTracer().startActiveSpan(example, async () => {
-          await dag
+          const ctr = dag
             .container()
             .from(WORKING_CONTAINER_IMAGE)
             .withWorkdir("/src")
@@ -127,28 +127,58 @@ export class Examples {
               "/src/example",
               bunDirectory.directory(example),
             )
-            .withWorkdir("/src/example")
-            .withExec([
-              "bun",
-              "pm",
-              "pkg",
-              "set",
-              "devDependencies[@otel-test-runner/bun-test]=../packages/bun-test",
-            ])
-            .withExec(["bun", "install"])
-            .withExec(["bun", "test"], { experimentalPrivilegedNesting: true })
-            .sync();
+            .withWorkdir("/src/example");
+
+          await getTracer().startActiveSpan("latest version", async () => {
+            await ctr
+              .withExec(["bun", "install"])
+              .withExec(["bun", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
+
+          await getTracer().startActiveSpan("local version", async () => {
+            await ctr
+              .withExec([
+                "bun",
+                "pm",
+                "pkg",
+                "set",
+                "devDependencies[@otel-test-runner/bun-test]=../packages/bun-test",
+              ])
+              .withoutFile("bun.lock")
+              .withExec(["bun", "install"])
+              .withExec(["bun", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
         });
       }),
     );
   }
 
   @func()
-  async bump(version: string): Promise<Changeset> {
+  async bump(
+    @argument({
+      defaultPath: "/",
+      ignore: [
+        "*",
+        "!examples/",
+        "examples/**/*/node_modules",
+        "examples/**/*/*.md",
+        "examples/**/*/.gitignore",
+      ],
+    })
+    examplesWorkspace: Directory,
+
+    version: string,
+  ): Promise<Changeset> {
     let devContainer = dag
       .container()
       .from(WORKING_CONTAINER_IMAGE)
-      .withDirectory("/src", this.originalSourceCodeWorkspace)
+      .withDirectory("/src", examplesWorkspace)
       .withWorkdir("/src");
 
     const testRunners = await devContainer.directory("/src/examples").entries();
@@ -180,8 +210,9 @@ export class Examples {
       }
     }
 
-    return devContainer
-      .directory("/src")
-      .changes(this.originalSourceCodeWorkspace);
+    return dag
+      .directory()
+      .withDirectory("/", devContainer.directory("/src"))
+      .changes(examplesWorkspace);
   }
 }
