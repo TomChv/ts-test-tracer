@@ -12,6 +12,7 @@ import {
   argument,
   check,
   Changeset,
+  Secret,
 } from "@dagger.io/dagger";
 import { getTracer } from "../sdk/core";
 
@@ -108,6 +109,52 @@ export class Packages {
             .withWorkdir(`packages/${pkg}`)
             .withMountedFile("biome.json", biomeJSON)
             .withExec(["bunx", "biome", "check"])
+            .sync();
+        });
+      }),
+    );
+  }
+
+  /**
+   * Operate a dry-run release on all packages
+   */
+  @check()
+  @func()
+  async releaseDryRun(): Promise<void> {
+    const devContainer = await this.devContainer(false);
+    const packages = await this.packages();
+
+    await Promise.all(
+      packages.map(async (pkg) => {
+        await getTracer().startActiveSpan(
+          `release dry-run ${pkg}`,
+          async () => {
+            await devContainer
+              .withEnvVariable("NPM_CONFIG_TOKEN", "x")
+              .withWorkdir(`packages/${pkg}`)
+              .withExec(["bun", "publish", "--access-public", "--dry-run"])
+              .sync();
+          },
+        );
+      }),
+    );
+  }
+
+  /**
+   * Release the packages to npm registry.
+   */
+  @func()
+  async release(npmToken: Secret): Promise<void> {
+    const devContainer = await this.devContainer(false);
+    const packages = await this.packages();
+
+    await Promise.all(
+      packages.map(async (pkg) => {
+        await getTracer().startActiveSpan(`release ${pkg}`, async () => {
+          await devContainer
+            .withSecretVariable("NPM_CONFIG_TOKEN", npmToken)
+            .withWorkdir(`packages/${pkg}`)
+            .withExec(["bun", "publish", "--access-public"])
             .sync();
         });
       }),
