@@ -4,8 +4,9 @@
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "devDependencies": {
+    "@biomejs/biome": "2.3.7",
     "@types/bun": "latest"
   },
   "peerDependencies": {

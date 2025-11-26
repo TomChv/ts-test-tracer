@@ -1,0 +1,7 @@
+{
+  "name": "packages",
+  "engineVersion": "v0.19.7",
+  "sdk": {
+    "source": "typescript"
+  }
+}

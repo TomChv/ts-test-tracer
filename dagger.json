@@ -1,0 +1,14 @@
+{
+  "name": "otel-test-tracer",
+  "engineVersion": "v0.19.7",
+  "toolchains": [
+    {
+      "name": "examples",
+      "source": ".dagger/toolchains/examples"
+    },
+    {
+      "name": "packages",
+      "source": ".dagger/toolchains/packages"
+    }
+  ]
+}

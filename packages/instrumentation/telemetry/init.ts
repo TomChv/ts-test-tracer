@@ -1,7 +1,7 @@
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 
-import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
+import { LiveProcessor } from "./live_processor";
 
 /**
  * Batch span processor scheduler delays.
@@ -13,7 +13,7 @@ const OTEL_TEST_RUNNER_SERVICE_NAME = "otel-typescript-test-runner";
 /**
  * Private global env variable to store the OTEL SDK configuration.
  */
-let otelSDK: NodeSDK | undefined = undefined;
+let otelSDK: NodeSDK | undefined;
 
 /**
  * Initialization function to call before instrumenting
@@ -30,7 +30,7 @@ export function initialize(): void {
   }
 
   const exporter = new OTLPTraceExporter();
-  const processor = new BatchSpanProcessor(exporter, {
+  const processor = new LiveProcessor(exporter, {
     scheduledDelayMillis: NEARLY_IMMEDIATE,
   });
 
