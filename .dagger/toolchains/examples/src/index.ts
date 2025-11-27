@@ -15,6 +15,7 @@ import {
   Changeset,
 } from "@dagger.io/dagger";
 import { getTracer } from "@dagger.io/dagger/telemetry";
+import { trimSuffix } from "./utils";
 
 const WORKING_CONTAINER_IMAGE =
   "oven/bun:1.3-alpine@sha256:d2bc1fbc3afcd3d70afc2bb2544235bf559caae2a3084e9abed126e233797511";
@@ -113,7 +114,9 @@ export class Examples {
     bunExampleWorkspace: Directory,
   ): Promise<void> {
     const bunDirectory = bunExampleWorkspace.directory("examples/bun");
-    const examples = await bunDirectory.entries();
+    const examples = (await bunDirectory.entries()).map((dir) =>
+      trimSuffix(dir, "/"),
+    );
 
     await Promise.all(
       examples.map(async (example) => {
@@ -181,13 +184,17 @@ export class Examples {
       .withDirectory("/src", examplesWorkspace)
       .withWorkdir("/src");
 
-    const testRunners = await devContainer.directory("/src/examples").entries();
+    const testRunners = (
+      await devContainer.directory("/src/examples").entries()
+    ).map((testRunner) => trimSuffix(testRunner, "/"));
 
     for (const testRunner of testRunners) {
       const testRunnerExampleDirectory = devContainer.directory(
         `/src/examples/${testRunner}`,
       );
-      const examples = await testRunnerExampleDirectory.entries();
+      const examples = (await testRunnerExampleDirectory.entries()).map(
+        (example) => trimSuffix(example, "/"),
+      );
 
       for (const example of examples) {
         await getTracer().startActiveSpan(
