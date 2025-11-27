@@ -1,0 +1,20 @@
+name: Continuous integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - use: actions/checkout@v5
+
+      - name: Run dagger checks
+        uses: dagger/checks@main
+        with:
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
