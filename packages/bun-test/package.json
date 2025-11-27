@@ -1,10 +1,15 @@
 {
   "name": "@otel-test-runner/bun-test",
-  "module": "index.ts",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.5",
+  "version": "0.0.8",
+  "scripts": {
+    "build": "bun build --target=node ./index.ts --outfile=dist/index.js && bun run build:declaration",
+    "build:declaration": "tsc --emitDeclarationOnly"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.3.7",
     "@types/bun": "latest"
@@ -13,10 +18,14 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@otel-test-runner/instrumentation": "0.0.5"
+    "@otel-test-runner/instrumentation": "0.0.8"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/TomChv/ts-test-tracer/tree/main/packages/bun-test"
-  }
+  },
+  "files": [
+    "dist/*.js",
+    "dist/**/*.d.ts"
+  ]
 }

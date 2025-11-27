@@ -5,7 +5,7 @@
     "": {
       "name": "simple",
       "devDependencies": {
-        "@otel-test-runner/bun-test": "0.0.5",
+        "@otel-test-runner/bun-test": "0.0.8",
         "@types/bun": "latest",
       },
       "peerDependencies": {
@@ -76,9 +76,9 @@
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
 
-    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.5", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.5" }, "peerDependencies": { "typescript": "^5" } }, "sha512-OCVDypJ3JvbYx2dGQy0wOrXfnb/rbF4B1HPajut0F3iTtdOLXnoGWjPqygEqyeF07/kPsmrUQWbQLmqaV1/uqw=="],
+    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.8", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.8" }, "peerDependencies": { "typescript": "^5" } }, "sha512-2y4WTKNGAQrmE99+MXgBEoEFX22l+WhKQpK6kmCtySRCc20UrmTNS8isSEsgCRaB5C4s+Hyz6dcLNmWu6AJk2w=="],
 
-    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.5", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-obw2xqrNJl4zsY81xAEWWMMVgO2Xx4ZluzQihJ5ZA6otRBaUnEfVZM2e/qYG64zfsEtK8XBR8wVim+i48huq0A=="],
+    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.8", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-NwjxtQmAchHWF5w45823RA+1GN6YF5Qnq2nWi2tN/o19JQdwTnxOjOHhqEcwCDl8ie8LXC+zIlNokEepackq7g=="],
 
     "@protobufjs/aspromise": ["@protobufjs/aspromise@1.1.2", "", {}, "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="],
 

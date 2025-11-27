@@ -1,7 +1,7 @@
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 
-import { LiveProcessor } from "./live_processor";
+import { LiveProcessor } from "./live_processor.js";
 
 /**
  * Batch span processor scheduler delays.

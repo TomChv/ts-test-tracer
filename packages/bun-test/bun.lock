@@ -1,11 +1,10 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@otel-test-runner/bun-test",
       "dependencies": {
-        "@otel-test-runner/instrumentation": "0.0.5",
+        "@otel-test-runner/instrumentation": "0.0.7",
       },
       "devDependencies": {
         "@biomejs/biome": "2.3.7",
@@ -97,7 +96,7 @@
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
 
-    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.5", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-obw2xqrNJl4zsY81xAEWWMMVgO2Xx4ZluzQihJ5ZA6otRBaUnEfVZM2e/qYG64zfsEtK8XBR8wVim+i48huq0A=="],
+    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.7", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-Pp6/TA/q9Uqr0ZXRO3R+r0EG2ykymaQ8zx3FHq3q3Npq+IMT78barrAqzh6aKGtlc1sYqO8xX04B9k+tu79jDw=="],
 
     "@protobufjs/aspromise": ["@protobufjs/aspromise@1.1.2", "", {}, "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="],
 

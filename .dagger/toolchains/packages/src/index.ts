@@ -21,7 +21,8 @@ const WORKING_CONTAINER_IMAGE =
 
 @object()
 export class Packages {
-  @func()
+  originalPackageCodeWorkspace: Directory;
+
   packageCodeWorkspace: Directory;
 
   constructor(
@@ -34,10 +35,12 @@ export class Packages {
         "packages/*/node_modules",
         "packages/*/assets",
         "packages/*/.gitignore",
+        "packages/*/dist",
       ],
     })
     packageCodeWorkspace: Directory,
   ) {
+    this.originalPackageCodeWorkspace = packageCodeWorkspace;
     this.packageCodeWorkspace = packageCodeWorkspace;
   }
 
@@ -47,6 +50,16 @@ export class Packages {
   @func()
   async packages(): Promise<string[]> {
     return this.packageCodeWorkspace.directory("packages").entries();
+  }
+
+  @func()
+  withFilteredPackage(include?: string[], exclude?: string[]): Packages {
+    this.packageCodeWorkspace = this.originalPackageCodeWorkspace.filter({
+      include: include?.map((pattern) => `packages/${pattern}`),
+      exclude: exclude?.map((pattern) => `packages/${pattern}`),
+    });
+
+    return this;
   }
 
   /**
@@ -78,7 +91,7 @@ export class Packages {
             .withDirectory(
               ".",
               this.packageCodeWorkspace.directory(`packages/${pkg}`),
-              { include: ["*.ts", "tsconfig.json"] },
+              { include: ["**/*.ts", "tsconfig.json"] },
             )
             .sync();
         },
@@ -122,42 +135,60 @@ export class Packages {
   @check()
   @func()
   async releaseDryRun(): Promise<void> {
-    const devContainer = await this.devContainer(false);
-    const packages = await this.packages();
-
-    await Promise.all(
-      packages.map(async (pkg) => {
-        await getTracer().startActiveSpan(
-          `release dry-run ${pkg}`,
-          async () => {
-            await devContainer
-              .withEnvVariable("NPM_CONFIG_TOKEN", "x")
-              .withWorkdir(`packages/${pkg}`)
-              .withExec(["bun", "publish", "--access-public", "--dry-run"])
-              .sync();
-          },
-        );
-      }),
-    );
+    await this.release(dag.setSecret("npmToken", "x"), true);
   }
 
   /**
    * Release the packages to npm registry.
    */
   @func()
-  async release(npmToken: Secret): Promise<void> {
-    const devContainer = await this.devContainer(false);
+  async release(
+    npmToken: Secret,
+
+    dryRun: boolean = false,
+  ): Promise<void> {
+    const releaseCmd = ["bun", "publish", "--access-public"];
+    if (dryRun) {
+      releaseCmd.push("--dry-run");
+    }
+    const instrumentationPackage: Packages = new Packages(
+      this.originalPackageCodeWorkspace,
+    ).withFilteredPackage(["instrumentation"]);
+
+    await getTracer().startActiveSpan(
+      `release instrumentation pkg ${dryRun ? "(dry-run)" : ""}`,
+      async () => {
+        const instrumentationPackageDevContainer =
+          await instrumentationPackage.devContainer(true);
+
+        await instrumentationPackageDevContainer
+          .withSecretVariable("NPM_CONFIG_TOKEN", npmToken)
+          .withWorkdir(`packages/instrumentation`)
+          .withExec(["bun", "run", "build"])
+          .withExec(releaseCmd)
+          .sync();
+      },
+    );
+
+    const devContainer = await this.withFilteredPackage(
+      [],
+      ["instrumentation"],
+    ).devContainer(true);
     const packages = await this.packages();
 
     await Promise.all(
       packages.map(async (pkg) => {
-        await getTracer().startActiveSpan(`release ${pkg}`, async () => {
-          await devContainer
-            .withSecretVariable("NPM_CONFIG_TOKEN", npmToken)
-            .withWorkdir(`packages/${pkg}`)
-            .withExec(["bun", "publish", "--access-public"])
-            .sync();
-        });
+        await getTracer().startActiveSpan(
+          `release ${pkg} ${dryRun ? "(dry-run)" : ""}`,
+          async () => {
+            await devContainer
+              .withSecretVariable("NPM_CONFIG_TOKEN", npmToken)
+              .withWorkdir(`packages/${pkg}`)
+              .withExec(["bun", "run", "build"])
+              .withExec(releaseCmd)
+              .sync();
+          },
+        );
       }),
     );
   }

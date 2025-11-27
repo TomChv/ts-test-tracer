@@ -15,7 +15,7 @@ export function getTracer(name: string): Tracer {
  * utility function to automatically create/close span
  * on call.
  */
-class Tracer {
+export class Tracer {
   private tracer: opentelemetry.Tracer;
 
   constructor(name: string) {

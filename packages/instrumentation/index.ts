@@ -1,3 +1,3 @@
-export { injectTraceParentInContext } from "./telemetry/context";
-export { close, initialize } from "./telemetry/init";
-export { getTracer } from "./tracer/tracer";
+export { injectTraceParentInContext } from "./telemetry/context.js";
+export { close, initialize } from "./telemetry/init.js";
+export { getTracer } from "./tracer/tracer.js";
