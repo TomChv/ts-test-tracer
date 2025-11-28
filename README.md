@@ -6,7 +6,7 @@ Utility libraries to automatically trace tests inside `dagger run`.
 
 - [x] Bun (`@otel-test-runner/bun-test`)
 - [ ] Jest
-- [ ] Mocha
+- [ ] Mocha (`@otel-test-runner/mocha-test`) (WIP)
 - [ ] Deno
 
 ### Examples
