@@ -2,10 +2,11 @@
   "name": "@otel-test-runner/instrumentation",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "A utility package to setup OpenTelemetry on Typescript test runners",
   "scripts": {
     "build": "bun build --target=node ./index.ts --outfile=dist/index.js && bun run build:declaration",
@@ -29,5 +30,14 @@
     "dist/**/*.js",
     "dist/**/*.d.ts",
     "README.md"
-  ]
+  ],
+  "keywords": [
+    "test",
+    "dagger",
+    "opentelemetry"
+  ],
+  "bugs": {
+    "url": "https://github.com/TomChv/ts-test-tracer/issues"
+  },
+  "homepage": "https://github.com/TomChv/ts-test-tracer/tree/main#readme"
 }

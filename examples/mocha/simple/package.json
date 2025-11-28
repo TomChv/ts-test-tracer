@@ -1,0 +1,21 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_OPTIONS=--preserve-symlinks mocha *.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@otel-test-runner/mocha-test": "0.0.10",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.1",
+    "mocha": "^11.7.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

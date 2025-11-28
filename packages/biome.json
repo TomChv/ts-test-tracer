@@ -1,4 +1,7 @@
 {
+  "files": {
+    "includes": ["**/*.ts"]
+  },
   "linter": {
     "enabled": true,
     "rules": {

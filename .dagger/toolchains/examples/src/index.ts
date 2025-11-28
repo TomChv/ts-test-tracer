@@ -17,8 +17,11 @@ import {
 import { getTracer } from "@dagger.io/dagger/telemetry";
 import { trimSuffix } from "./utils";
 
-const WORKING_CONTAINER_IMAGE =
+const BUN_CONTAINER_IMAGE =
   "oven/bun:1.3-alpine@sha256:d2bc1fbc3afcd3d70afc2bb2544235bf559caae2a3084e9abed126e233797511";
+
+const NODE_CONTAINER_IMAGE =
+  "node:24.11.1-alpine3.22@sha256:2867d550cf9d8bb50059a0fff528741f11a84d985c732e60e19e8e75c7239c43";
 
 @object()
 export class Examples {
@@ -44,24 +47,37 @@ export class Examples {
   ) {
     this.originalSourceCodeWorkspace = sourceCodeWorkspace;
 
-    // Update dependency to be local so we can test the local code.
-    this.sourceCodeWorkspace = dag
+    const testRunnerPkgs = ["mocha-test", "bun-test"];
+    const allPkg = ["instrumentation", ...testRunnerPkgs];
+
+    let ctr = dag
       .container()
-      .from(WORKING_CONTAINER_IMAGE)
-      .withDirectory("/src", sourceCodeWorkspace)
-      .withWorkdir("/src/packages/bun-test")
-      .withExec([
-        "bun",
-        "pm",
-        "pkg",
-        "set",
-        "dependencies[@otel-test-runner/instrumentation]=../instrumentation",
-      ])
-      .withWorkdir("/src/packages/instrumentation")
-      .withExec(["bun", "install"])
-      .withWorkdir("/src/packages/bun-test")
-      .withExec(["bun", "install"])
-      .directory("/src");
+      .from(BUN_CONTAINER_IMAGE)
+      .withDirectory("/src", sourceCodeWorkspace);
+
+    // Update test runner packages to use local instrumentation.
+    for (const testRunnerPkg of testRunnerPkgs) {
+      ctr = ctr
+        .withWorkdir(`/src/packages/${testRunnerPkg}`)
+        .withExec([
+          "bun",
+          "pm",
+          "pkg",
+          "set",
+          "dependencies[@otel-test-runner/instrumentation]=../instrumentation",
+        ]);
+    }
+
+    // Install and build local packages.
+    for (const pkg of allPkg) {
+      ctr = ctr
+        .withWorkdir(`/src/packages/${pkg}`)
+        .withExec(["bun", "install"])
+        .withExec(["bun", "run", "build"]);
+    }
+
+    // Update dependency to be local so we can test the local code.
+    this.sourceCodeWorkspace = ctr.directory("/src");
   }
 
   /**
@@ -85,7 +101,7 @@ export class Examples {
   ) {
     return dag
       .container()
-      .from(WORKING_CONTAINER_IMAGE)
+      .from(BUN_CONTAINER_IMAGE)
       .withWorkdir("/src")
       .withMountedDirectory("/src", this.sourceCodeWorkspace)
       .withMountedDirectory(
@@ -123,7 +139,7 @@ export class Examples {
         await getTracer().startActiveSpan(example, async () => {
           const ctr = dag
             .container()
-            .from(WORKING_CONTAINER_IMAGE)
+            .from(BUN_CONTAINER_IMAGE)
             .withWorkdir("/src")
             .withMountedDirectory("/src", this.sourceCodeWorkspace)
             .withMountedDirectory(
@@ -162,6 +178,69 @@ export class Examples {
     );
   }
 
+  @check()
+  @func()
+  async testMocha(
+    @argument({
+      defaultPath: "/",
+      ignore: [
+        "*",
+        "!examples/mocha",
+        "examples/mocha/*/node_modules",
+        "examples/mocha/*/*.md",
+        "examples/mocha/*/.gitignore",
+      ],
+    })
+    mochaExampleWorkspace: Directory,
+  ): Promise<void> {
+    const mochaDirectory = mochaExampleWorkspace.directory("examples/mocha");
+    const examples = (await mochaDirectory.entries()).map((dir) =>
+      trimSuffix(dir, "/"),
+    );
+
+    await Promise.all(
+      examples.map(async (example) => {
+        await getTracer().startActiveSpan(example, async () => {
+          const ctr = dag
+            .container()
+            .from(NODE_CONTAINER_IMAGE)
+            .withWorkdir("/src")
+            .withMountedDirectory("/src", this.sourceCodeWorkspace)
+            .withMountedDirectory(
+              "/src/example",
+              mochaDirectory.directory(example),
+            )
+            .withWorkdir("/src/example");
+
+          await getTracer().startActiveSpan("latest version", async () => {
+            await ctr
+              .withExec(["npm", "install"])
+              .withExec(["npm", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
+
+          await getTracer().startActiveSpan("local version", async () => {
+            await ctr
+              .withExec([
+                "npm",
+                "pkg",
+                "set",
+                "devDependencies[@otel-test-runner/bun-test]=../packages/mocha-test",
+              ])
+              .withoutFile("package-lock.json")
+              .withExec(["npm", "install"])
+              .withExec(["npm", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
+        });
+      }),
+    );
+  }
+
   @func()
   async bump(
     @argument({
@@ -180,7 +259,7 @@ export class Examples {
   ): Promise<Changeset> {
     let devContainer = dag
       .container()
-      .from(WORKING_CONTAINER_IMAGE)
+      .from(BUN_CONTAINER_IMAGE)
       .withDirectory("/src", examplesWorkspace)
       .withWorkdir("/src");
 
@@ -207,10 +286,8 @@ export class Examples {
                 "pm",
                 "pkg",
                 "set",
-                `devDependencies[@otel-test-runner/bun-test]=${version}`,
+                `devDependencies[@otel-test-runner/${testRunner}-test]=${version}`,
               ])
-              // Update lockfile
-              .withExec(["bun", "install", "--lockfile-only"])
               .sync();
           },
         );

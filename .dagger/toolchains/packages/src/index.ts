@@ -37,6 +37,7 @@ export class Packages {
         "packages/*/assets",
         "packages/*/.gitignore",
         "packages/*/dist",
+        "*/.DS_Store"
       ],
     })
     packageCodeWorkspace: Directory,
@@ -90,7 +91,7 @@ export class Packages {
         async () => {
           ctr = await ctr
             .withWorkdir(`/src/packages/${pkg}`)
-            .withExec(["bun", "install"])
+            .withExec(["bun", "install", "--force"])
             .withDirectory(
               ".",
               this.packageCodeWorkspace.directory(`packages/${pkg}`),
