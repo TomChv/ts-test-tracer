@@ -6,7 +6,7 @@
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Mocha Test Runner with Open telemetry support for auto-instrumentation with dagger",
   "scripts": {
     "build": "bun build --target=node ./index.ts --outfile=dist/index.js && bun run build:declaration",
@@ -21,7 +21,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@otel-test-runner/instrumentation": "0.0.10",
+    "@otel-test-runner/instrumentation": "0.0.11",
     "mocha": "^11.7.5"
   },
   "repository": {
@@ -37,7 +37,7 @@
   "files": [
     "dist/*.js",
     "dist/**/*.d.ts",
-    "README.d",
+    "README.md",
     "assets/*"
   ],
   "bugs": {

@@ -34,11 +34,11 @@ describe("test suite", () => {
 - [x] describe
 - [x] context
 - [x] `it|specify`.`skip|only`
-- [ ] `describe|context`.`skip|only`
-- [ ] this.`timeout|retries`
-- [ ] tests.`forEach`
-- [ ] [`QUnit`](https://mochajs.org/next/interfaces/qunit/) interface
-- [ ] [`TDD`](https://mochajs.org/next/interfaces/tdd/) interface
+- [x] `describe|context`.`skip|only`
+- [x] this.`timeout|retries`
+- [x] tests.`forEach`
+- [x] [`QUnit`](https://mochajs.org/next/interfaces/qunit/) interface
+- [x] [`TDD`](https://mochajs.org/next/interfaces/tdd/) interface
 
 ### Dagger integration
 

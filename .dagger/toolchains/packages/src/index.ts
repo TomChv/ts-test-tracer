@@ -95,7 +95,7 @@ export class Packages {
             .withDirectory(
               ".",
               this.packageCodeWorkspace.directory(`packages/${pkg}`),
-              { include: ["**/*.ts", "tsconfig.json"] },
+              { include: ["**/*.ts", "tsconfig.json", "README.md"] },
             )
             .sync();
         },
