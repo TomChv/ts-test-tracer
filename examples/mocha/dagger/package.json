@@ -11,7 +11,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@otel-test-runner/mocha-test": "0.0.11",
+    "@otel-test-runner/mocha-test": "0.0.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.1",
     "mocha": "^11.7.5",

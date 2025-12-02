@@ -1,4 +1,4 @@
-# Bun OTEL Test library
+# Mocha OTEL Test library
 
 A wrapper around [`mocha`](https://mochajs.org/next/) to automatically traces tests inside `dagger run` or `dagger call`.
 
