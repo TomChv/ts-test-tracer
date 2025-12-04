@@ -4,11 +4,11 @@
   "toolchains": [
     {
       "name": "examples",
-      "source": ".dagger/toolchains/examples"
+      "source": "dagger/toolchains/examples"
     },
     {
       "name": "packages",
-      "source": ".dagger/toolchains/packages"
+      "source": "dagger/toolchains/packages"
     }
   ]
 }
