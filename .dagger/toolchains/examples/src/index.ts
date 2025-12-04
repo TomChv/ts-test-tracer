@@ -1,7 +1,7 @@
 /**
  * A toolchain to manage examples.
  *
- * The tests are pointing `@otel-test-runner/bun-test` to its local version
+ * The tests are pointing `@otel-test-runner/<testRunner>-test` to its local version
  * so it can run example with unpublished changes.
  */
 
@@ -38,6 +38,7 @@ export class Examples {
         "*",
         "!packages/*",
         "packages/*/node_modules",
+        "packages/*/dist",
         "packages/*/assets",
         "packages/*/.gitignore",
         "packages/*/*.md",
@@ -47,7 +48,7 @@ export class Examples {
   ) {
     this.originalSourceCodeWorkspace = sourceCodeWorkspace;
 
-    const testRunnerPkgs = ["mocha-test", "bun-test"];
+    const testRunnerPkgs = ["mocha-test", "bun-test", "jest-test"];
     const allPkg = ["instrumentation", ...testRunnerPkgs];
 
     let ctr = dag
@@ -227,7 +228,70 @@ export class Examples {
                 "npm",
                 "pkg",
                 "set",
-                "devDependencies[@otel-test-runner/bun-test]=../packages/mocha-test",
+                "devDependencies[@otel-test-runner/mocha-test]=../packages/mocha-test",
+              ])
+              .withoutFile("package-lock.json")
+              .withExec(["npm", "install"])
+              .withExec(["npm", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
+        });
+      }),
+    );
+  }
+
+  @check()
+  @func()
+  async jestMocha(
+    @argument({
+      defaultPath: "/",
+      ignore: [
+        "*",
+        "!examples/jest",
+        "examples/jest/*/node_modules",
+        "examples/jest/*/*.md",
+        "examples/jest/*/.gitignore",
+      ],
+    })
+    jestExampleWorkspace: Directory,
+  ): Promise<void> {
+    const jestDirectory = jestExampleWorkspace.directory("examples/jest");
+    const examples = (await jestDirectory.entries()).map((dir) =>
+      trimSuffix(dir, "/"),
+    );
+
+    await Promise.all(
+      examples.map(async (example) => {
+        await getTracer().startActiveSpan(example, async () => {
+          const ctr = dag
+            .container()
+            .from(NODE_CONTAINER_IMAGE)
+            .withWorkdir("/src")
+            .withMountedDirectory("/src", this.sourceCodeWorkspace)
+            .withMountedDirectory(
+              "/src/example",
+              jestDirectory.directory(example),
+            )
+            .withWorkdir("/src/example");
+
+          await getTracer().startActiveSpan("latest version", async () => {
+            await ctr
+              .withExec(["npm", "install"])
+              .withExec(["npm", "test"], {
+                experimentalPrivilegedNesting: true,
+              })
+              .sync();
+          });
+
+          await getTracer().startActiveSpan("local version", async () => {
+            await ctr
+              .withExec([
+                "npm",
+                "pkg",
+                "set",
+                "devDependencies[@otel-test-runner/jest-test]=../packages/jest-test",
               ])
               .withoutFile("package-lock.json")
               .withExec(["npm", "install"])
