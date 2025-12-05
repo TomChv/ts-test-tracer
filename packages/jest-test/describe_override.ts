@@ -44,25 +44,33 @@ function wrapDescribeFunction(
   };
 }
 
+function wrapIterableDescribe(originalDescribe: any): any {
+  return (cases: Array<any>) => {
+    return (title: string, fn: (...args: any[]) => void) => {
+      cases.forEach((row, index) => {
+        const suiteTitle = formatTitle(title, row, index);
+
+        if (Array.isArray(row)) {
+          // Spread array items as individual args
+          originalDescribe(suiteTitle, () => fn(...row));
+        } else {
+          // Pass non-array rows as a single arg
+          originalDescribe(suiteTitle, () => fn(row));
+        }
+      });
+    };
+  };
+}
+
 const baseDescribe = wrapDescribeFunction(jest.describe);
 
+baseDescribe.only = wrapDescribeFunction(jest.describe.only);
+baseDescribe.only.each = wrapIterableDescribe(baseDescribe.only);
+
 baseDescribe.skip = wrapDescribeFunction(jest.describe.skip);
+baseDescribe.skip.each = wrapIterableDescribe(baseDescribe.skip);
 
-baseDescribe.each = (cases: Array<any>) => {
-  return (title: string, fn: (...args: any[]) => void) => {
-    cases.forEach((row, index) => {
-      const suiteTitle = formatTitle(title, row, index);
-
-      if (Array.isArray(row)) {
-        // Spread array items as individual args
-        baseDescribe(suiteTitle, () => fn(...row));
-      } else {
-        // Pass non-array rows as a single arg
-        baseDescribe(suiteTitle, () => fn(row));
-      }
-    });
-  };
-};
+baseDescribe.each = wrapIterableDescribe(baseDescribe);
 
 /**
  * @see https://jestjs.io/docs/api

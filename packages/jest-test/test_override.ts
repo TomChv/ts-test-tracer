@@ -12,7 +12,9 @@ function wrapTestFunction(
     | typeof jest.it.only
     | typeof jest.it.todo
     | typeof jest.it.failing
-    | typeof jest.it.concurrent,
+    | typeof jest.it.concurrent
+    | typeof jest.it.concurrent.only
+    | typeof jest.it.concurrent.skip,
 ): any {
   return (name: string, fn: (...args: any[]) => any | Promise<any>, timeout?: number) => {
     const node = testTree[testTree.length - 1];
@@ -34,28 +36,47 @@ function wrapTestFunction(
   };
 }
 
+function wrapIterableFunction(originalFunction: typeof baseTest): any {
+  return (cases: Array<any>) => {
+    return (title: string, fn: (...args: any[]) => any | Promise<any>, timeout?: number) => {
+      return cases.map((row, index) => {
+        const testTitle = formatTitle(title, row, index);
+
+        if (Array.isArray(row)) {
+          // Spread array items as individual args
+          return originalFunction(testTitle, () => fn(...row), timeout);
+        } else {
+          // Pass non-array rows as a single arg
+          return originalFunction(testTitle, () => fn(row), timeout);
+        }
+      });
+    };
+  };
+}
+
 const baseTest = wrapTestFunction(jest.it);
 
 baseTest.skip = wrapTestFunction(jest.it.skip);
-baseTest.only = wrapTestFunction(jest.it.only);
-baseTest.todo = jest.it.todo;
-baseTest.failing = wrapTestFunction(jest.it.failing);
-baseTest.concurrent = wrapTestFunction(jest.it.concurrent);
-baseTest.each = (cases: Array<any>) => {
-  return (title: string, fn: (...args: any[]) => any | Promise<any>, timeout?: number) => {
-    cases.forEach((row, index) => {
-      const testTitle = formatTitle(title, row, index);
+baseTest.skip.failing = wrapTestFunction(jest.it.skip.failing);
+baseTest.skip.each = wrapIterableFunction(baseTest.skip);
 
-      if (Array.isArray(row)) {
-        // Spread array items as individual args
-        baseTest(testTitle, () => fn(...row), timeout);
-      } else {
-        // Pass non-array rows as a single arg
-        baseTest(testTitle, () => fn(row), timeout);
-      }
-    });
-  };
-};
+baseTest.only = wrapTestFunction(jest.it.only);
+baseTest.only.failing = wrapTestFunction(jest.it.only.failing);
+baseTest.only.each = wrapIterableFunction(baseTest.only);
+
+baseTest.todo = jest.it.todo;
+
+baseTest.failing = wrapTestFunction(jest.it.failing);
+baseTest.failing.each = wrapIterableFunction(baseTest.failing);
+
+baseTest.concurrent = wrapTestFunction(jest.it.concurrent);
+baseTest.concurrent.each = wrapIterableFunction(baseTest.concurrent);
+baseTest.concurrent.only = wrapTestFunction(jest.it.concurrent.only);
+baseTest.concurrent.skip = wrapTestFunction(jest.it.concurrent.skip);
+baseTest.concurrent.only.each = wrapIterableFunction(baseTest.concurrent.only);
+baseTest.concurrent.skip.each = wrapIterableFunction(baseTest.concurrent.skip);
+
+baseTest.each = wrapIterableFunction(baseTest);
 
 /**
  * @see https://jestjs.io/docs/api

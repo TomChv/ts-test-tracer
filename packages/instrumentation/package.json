@@ -6,7 +6,7 @@
   "type": "module",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "A utility package to setup OpenTelemetry on Typescript test runners",
   "scripts": {
     "build": "bun build --target=node ./index.ts --outfile=dist/index.js && bun run build:declaration",

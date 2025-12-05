@@ -39,9 +39,9 @@ describe("test suite", () => {
 - [x] `describe`
 - [x] `it|test`.`skip|only|concurrent|todo|failing`
 - [x] `describe`.`skip|only`
-- [ ] `it|test`.`concurrent`.`each|only.each|skip.each`
-- [ ] `it|test`.`skip|only`.`failing|each`
-- [ ] `describe`.`skip|only`.`each`
+- [x] `it|test`.`concurrent`.`each|only.each|skip.each`
+- [x] `it|test`.`skip|only`.`failing|each`
+- [x] `describe`.`skip|only`.`each`
 - [x] `each` function
 
 ### Dagger integration

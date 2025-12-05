@@ -12,7 +12,7 @@
   "type": "module",
   "devDependencies": {
     "@jest/globals": "^30.2.0",
-    "@otel-test-runner/jest-test": "0.0.12",
+    "@otel-test-runner/jest-test": "0.1.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
     "jest": "^30.2.0",
