@@ -42,7 +42,7 @@ export class Packages {
     npmToken: Secret,
     version: string,
     dryRun: boolean = false,
-  ): Promise<Changeset> {
+  ): Promise<Directory> {
     let workspace = dag.directory();
 
     // First release the instrumentation package
@@ -85,6 +85,6 @@ export class Packages {
       });
     }
 
-    return workspace.changes(this.originalWorkspace);
+    return workspace;
   }
 }

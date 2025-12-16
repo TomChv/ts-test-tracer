@@ -19,5 +19,8 @@
     "ts-jest": "^29.4.6",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@otel-test-runner/jest-test": "0.2.1"
   }
 }
