@@ -21,6 +21,7 @@ const MOD_PKG_LOCATION = `/src/${REPO_PKG_LOCATION}`;
 export class Instrumentation {
   originalWorkspace: Directory;
 
+  @func()
   source: Directory;
 
   constructor(
@@ -36,7 +37,7 @@ export class Instrumentation {
     workspace: Directory,
   ) {
     this.originalWorkspace = workspace;
-    this.source = this.originalWorkspace.directory(REPO_PKG_LOCATION);
+    this.source = workspace.directory(REPO_PKG_LOCATION);
   }
 
   /***********************
