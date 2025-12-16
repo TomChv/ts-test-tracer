@@ -17,6 +17,10 @@
     {
       "name": "mocha-test",
       "source": "dagger/toolchains/mocha-test"
+    },
+    {
+      "name": "packages",
+      "source": "dagger/modules/packages"
     }
   ]
 }
