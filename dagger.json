@@ -1,14 +1,22 @@
 {
   "name": "otel-test-tracer",
-  "engineVersion": "v0.19.7",
+  "engineVersion": "v0.19.8",
   "toolchains": [
     {
-      "name": "examples",
-      "source": "dagger/toolchains/examples"
+      "name": "bun-test",
+      "source": "dagger/toolchains/bun-test"
     },
     {
-      "name": "packages",
-      "source": "dagger/toolchains/packages"
+      "name": "instrumentation",
+      "source": "dagger/toolchains/instrumentation"
+    },
+    {
+      "name": "jest-test",
+      "source": "dagger/toolchains/jest-test"
+    },
+    {
+      "name": "mocha-test",
+      "source": "dagger/toolchains/mocha-test"
     }
   ]
 }
