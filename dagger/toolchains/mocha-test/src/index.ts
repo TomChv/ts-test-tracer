@@ -233,8 +233,7 @@ export class MochaTest {
       exampleCtr = exampleCtr
         .withWorkdir(`${MOD_EXAMPLE_LOCATION}/${exampleDir}`)
         .withExec([
-          "bun",
-          "pm",
+          "npm",
           "pkg",
           "set",
           `dependencies[@otel-test-runner/mocha-test]=${version}`,
