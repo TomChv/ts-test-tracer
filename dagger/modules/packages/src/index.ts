@@ -54,7 +54,7 @@ export class Packages {
     await getTracer().startActiveSpan(
       "release instrumentation pkg",
       async () => {
-        await instrumentationPkg.release(npmToken, { dryRun });
+        await instrumentationPkg.withBuild().release(npmToken, { dryRun });
 
         workspace = await workspace
           .withDirectory("/", instrumentationPkg.changes().layer())
@@ -77,7 +77,7 @@ export class Packages {
           .withBumpedVersion(version)
           .withUpdatedLockefile();
 
-        await _pkg.release(npmToken, { dryRun });
+        await _pkg.withBuild().release(npmToken, { dryRun });
 
         workspace = await workspace
           .withDirectory("/", _pkg.changes().layer())
