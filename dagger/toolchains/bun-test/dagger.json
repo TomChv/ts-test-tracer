@@ -1,0 +1,13 @@
+{
+  "name": "bun-test",
+  "engineVersion": "v0.19.8",
+  "sdk": {
+    "source": "typescript"
+  },
+  "dependencies": [
+    {
+      "name": "instrumentation",
+      "source": "../instrumentation"
+    }
+  ]
+}

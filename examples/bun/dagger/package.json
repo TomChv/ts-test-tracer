@@ -11,6 +11,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@dagger.io/dagger": "^0.19.7"
+    "@dagger.io/dagger": "^0.19.7",
+    "@otel-test-runner/bun-test": "0.2.3"
   }
 }

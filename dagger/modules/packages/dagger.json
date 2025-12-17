@@ -1,0 +1,25 @@
+{
+  "name": "packages",
+  "engineVersion": "v0.19.8",
+  "sdk": {
+    "source": "typescript"
+  },
+  "dependencies": [
+    {
+      "name": "bun-test",
+      "source": "../../toolchains/bun-test"
+    },
+    {
+      "name": "instrumentation",
+      "source": "../../toolchains/instrumentation"
+    },
+    {
+      "name": "jest-test",
+      "source": "../../toolchains/jest-test"
+    },
+    {
+      "name": "mocha-test",
+      "source": "../../toolchains/mocha-test"
+    }
+  ]
+}

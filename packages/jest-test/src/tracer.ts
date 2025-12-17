@@ -1,7 +1,7 @@
 import * as optl from "@opentelemetry/api";
 import * as otr from "@otel-test-runner/instrumentation";
 
-export const tracer = otr.getTracer("test-tracer/mocha");
+export const tracer = otr.getTracer("test-tracer/jest");
 
 /**
  * Utility function to automatically inject `TRACEPARENT` if the span

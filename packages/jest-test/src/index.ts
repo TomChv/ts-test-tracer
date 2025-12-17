@@ -1,4 +1,4 @@
-import * as jest from "@jest/globals";
+import { afterAll } from "@jest/globals";
 import * as otr from "@otel-test-runner/instrumentation";
 
 /**
@@ -9,7 +9,7 @@ otr.initialize();
 /**
  * Override jest.afterAll to call otr.close()
  */
-jest.afterAll(async () => {
+afterAll(async () => {
   try {
     await otr.close();
   } catch {
