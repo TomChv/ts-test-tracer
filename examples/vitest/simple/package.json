@@ -1,0 +1,17 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "CI=true vitest"
+  },
+  "devDependencies": {
+    "@otel-test-runner/instrumentation": "^0.2.3",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "@opentelemetry/sdk-node": "^0.208.0"
+  }
+}
