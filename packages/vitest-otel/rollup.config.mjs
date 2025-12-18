@@ -10,7 +10,8 @@ const external = (id) =>
   id === "node:crypto" ||
   id === "fs" ||
   id === "path" ||
-  id === "crypto";
+  id === "crypto" ||
+  id === "vitest";
 
 const config = {
   input: "src/index.ts",

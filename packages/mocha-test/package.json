@@ -3,7 +3,7 @@
   "description": "Mocha Test Runner with Open telemetry support for auto-instrumentation with dagger",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -39,7 +39,7 @@
     "mocha": "^11.7.5"
   },
   "dependencies": {
-    "@otel-test-runner/instrumentation": "0.2.3"
+    "@otel-test-runner/instrumentation": "0.2.4"
   },
   "repository": {
     "type": "git",

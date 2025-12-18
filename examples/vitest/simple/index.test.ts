@@ -1,31 +1,27 @@
-import { expect, describe, afterAll } from "vitest";
-import { trace } from "@opentelemetry/api";
-import * as otr from "@otel-test-runner/instrumentation"
+import { test as _test, expect, describe, afterAll } from "vitest";
 
-import { test } from "./wrapper"
+import { wrapTestFunction } from "@otel-test-runner/vitest-otel";
 
-const tracer = trace.getTracer("test");
+const test = wrapTestFunction(_test)
 
-afterAll(async () => {
-  await otr.close()
-})
+// const tracer = trace.getTracer("test");
 
 function sum(a: number, b: number) {
   return a + b;
 }
 
- test("test-1", async () => {
-   await tracer.startActiveSpan("hello world", async (span) => {
-     expect(sum(1, 2)).toBe(3);
- 
-     span.end();
-   });
- });
-// 
+test("test-1", async () => {
+  // await tracer.startActiveSpan("hello world", async (span) => {
+  expect(sum(1, 2)).toBe(3);
+
+  // span.end();
+  //  });
+});
+//
 // test("test-2", async () => {
 //   await tracer.startActiveSpan("hello world", async (span) => {
 //     expect(sum(1, 2)).toBe(3);
-// 
+//
 //     span.end();
 //   });
 // });
@@ -34,15 +30,15 @@ function sum(a: number, b: number) {
 //   test("describe.test-1", async () => {
 //     await tracer.startActiveSpan("hello world", async (span) => {
 //       expect(sum(1, 2)).toBe(3);
-// 
+//
 //       span.end();
 //     });
 //   });
-// 
+//
 //   test("describe.test-2", async () => {
 //     await tracer.startActiveSpan("hello world", async (span) => {
 //       expect(sum(1, 2)).toBe(3);
-// 
+//
 //       span.end();
 //     });
 //   });
