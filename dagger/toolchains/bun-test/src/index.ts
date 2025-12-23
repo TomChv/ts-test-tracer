@@ -253,7 +253,7 @@ export class BunTest {
    ***********************/
   @func()
   async release(npmToken: Secret, dryRun: boolean = false): Promise<void> {
-    const releaseCmd = ["bun", "publish", "--access-public"];
+    const releaseCmd = ["bun", "publish", "--access", "public"];
     if (dryRun) {
       releaseCmd.push("--dry-run");
     }
