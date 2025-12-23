@@ -20,6 +20,10 @@
     {
       "name": "mocha-test",
       "source": "../../toolchains/mocha-test"
+    },
+    {
+      "name": "vitest-otel",
+      "source": "../../toolchains/vitest-otel"
     }
   ]
 }

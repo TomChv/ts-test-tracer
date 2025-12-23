@@ -1,14 +1,14 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "dagger",
       "dependencies": {
-        "@dagger.io/dagger": "^0.19.7",
+        "@dagger.io/dagger": "^0.19.8",
+        "@otel-test-runner/bun-test": "0.2.4",
       },
       "devDependencies": {
-        "@otel-test-runner/bun-test": "0.0.10",
+        "@otel-test-runner/bun-test": "0.1.0",
         "@types/bun": "latest",
       },
       "peerDependencies": {
@@ -17,7 +17,7 @@
     },
   },
   "packages": {
-    "@dagger.io/dagger": ["@dagger.io/dagger@0.19.7", "", { "dependencies": { "@grpc/grpc-js": "^1.14.1", "@lifeomic/axios-fetch": "^3.1.0", "@opentelemetry/api": "^1.9.0", "@opentelemetry/core": "^2.2.0", "@opentelemetry/exporter-jaeger": "^2.2.0", "@opentelemetry/exporter-trace-otlp-http": "^0.208.0", "@opentelemetry/sdk-metrics": "^2.2.0", "@opentelemetry/sdk-node": "^0.208.0", "@opentelemetry/semantic-conventions": "^1.38.0", "adm-zip": "^0.5.16", "env-paths": "^3.0.0", "execa": "^9.6.0", "graphql": "^16.12.0", "graphql-request": "^7.3.1", "graphql-tag": "^2.12.6", "node-color-log": "^13.0.3", "node-fetch": "^3.3.2", "reflect-metadata": "^0.2.2", "tar": "^7.5.2", "typescript": "^5.9.3" } }, "sha512-lRoKMIzDweZLUctR80ih0CcQc0IkVFmbdVoPEQl4YWRjBpQdYP5Mdg/kEGQiogrXVLJt8fSKIG8wAnZoCMef0Q=="],
+    "@dagger.io/dagger": ["@dagger.io/dagger@0.19.8", "", { "dependencies": { "@grpc/grpc-js": "^1.14.1", "@lifeomic/axios-fetch": "^3.1.0", "@opentelemetry/api": "^1.9.0", "@opentelemetry/core": "^2.2.0", "@opentelemetry/exporter-jaeger": "^2.2.0", "@opentelemetry/exporter-trace-otlp-http": "^0.208.0", "@opentelemetry/sdk-metrics": "^2.2.0", "@opentelemetry/sdk-node": "^0.208.0", "@opentelemetry/semantic-conventions": "^1.38.0", "adm-zip": "^0.5.16", "env-paths": "^3.0.0", "execa": "^9.6.1", "graphql": "^16.12.0", "graphql-request": "^7.3.5", "graphql-tag": "^2.12.6", "node-color-log": "^13.0.3", "node-fetch": "^3.3.2", "reflect-metadata": "^0.2.2", "tar": "^7.5.2", "typescript": "^5.9.3" } }, "sha512-2amYFQ/I3E77PHC6zIKuWp7pNVnNSgS1WP9aiezX2rdh9DwLOrXSzhg/2/L642j7uI+VCtFGvD5xfgkF6MNA+w=="],
 
     "@graphql-typed-document-node/core": ["@graphql-typed-document-node/core@3.2.0", "", { "peerDependencies": { "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0" } }, "sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ=="],
 
@@ -89,9 +89,9 @@
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
 
-    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.0.10", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.0.10" }, "peerDependencies": { "typescript": "^5" } }, "sha512-UTNDARg2Gff1IPGwDbJCvauqr8oLUTTWqYEr5GxG+xyaIyKxvrMmMcXsPxENWekkkWnZ/VNK95G3lVD/BUqDNw=="],
+    "@otel-test-runner/bun-test": ["@otel-test-runner/bun-test@0.1.0", "", { "dependencies": { "@otel-test-runner/instrumentation": "0.1.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-dFJMJUeU1yvjuRos1XF+bXlcJq0okkN9qwGwyOK2SSpy6IQqCjyU8lKdZydq/p4zjyc4kdUUGoykbQ5P0TyEsw=="],
 
-    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.0.10", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-mA4QvWyJ00AJ/U+I6IeqRUuFgGW6upCXWhFlRjZ6WOO3IlOt35fHME+GmYCC8rYQzJcaHImUmUAvknbP7aPpIg=="],
+    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.1.0", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-JEG+Qe4hMoCRkAjyrDrpDZEw/U85d9zA9Ot/7OJvbMYVjmcIdlDidRtC9oultzK6pGhWlqcY8W6GJFPnHEYdBw=="],
 
     "@protobufjs/aspromise": ["@protobufjs/aspromise@1.1.2", "", {}, "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="],
 
@@ -181,7 +181,7 @@
 
     "escalade": ["escalade@3.2.0", "", {}, "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA=="],
 
-    "execa": ["execa@9.6.0", "", { "dependencies": { "@sindresorhus/merge-streams": "^4.0.0", "cross-spawn": "^7.0.6", "figures": "^6.1.0", "get-stream": "^9.0.0", "human-signals": "^8.0.1", "is-plain-obj": "^4.1.0", "is-stream": "^4.0.1", "npm-run-path": "^6.0.0", "pretty-ms": "^9.2.0", "signal-exit": "^4.1.0", "strip-final-newline": "^4.0.0", "yoctocolors": "^2.1.1" } }, "sha512-jpWzZ1ZhwUmeWRhS7Qv3mhpOhLfwI+uAX4e5fOcXqwMR7EcJ0pj2kV1CVzHVMX/LphnKWD3LObjZCoJ71lKpHw=="],
+    "execa": ["execa@9.6.1", "", { "dependencies": { "@sindresorhus/merge-streams": "^4.0.0", "cross-spawn": "^7.0.6", "figures": "^6.1.0", "get-stream": "^9.0.0", "human-signals": "^8.0.1", "is-plain-obj": "^4.1.0", "is-stream": "^4.0.1", "npm-run-path": "^6.0.0", "pretty-ms": "^9.2.0", "signal-exit": "^4.1.0", "strip-final-newline": "^4.0.0", "yoctocolors": "^2.1.1" } }, "sha512-9Be3ZoN4LmYR90tUoVu2te2BsbzHfhJyfEiAVfz7N5/zv+jduIfLrV2xdQXOHbaD6KgpGdO9PRPM1Y4Q9QkPkA=="],
 
     "fetch-blob": ["fetch-blob@3.2.0", "", { "dependencies": { "node-domexception": "^1.0.0", "web-streams-polyfill": "^3.0.3" } }, "sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ=="],
 
@@ -205,7 +205,7 @@
 
     "graphql": ["graphql@16.12.0", "", {}, "sha512-DKKrynuQRne0PNpEbzuEdHlYOMksHSUI8Zc9Unei5gTsMNA2/vMpoMz/yKba50pejK56qj98qM0SjYxAKi13gQ=="],
 
-    "graphql-request": ["graphql-request@7.3.4", "", { "dependencies": { "@graphql-typed-document-node/core": "^3.2.0" }, "peerDependencies": { "graphql": "14 - 16" } }, "sha512-kbpP5dw9hHIL5jN/2VS2JU0/Sc1hlsj7zrYBKSDiYd5iG8QfX7P79u26ZBi84eAijsqYVZEpLvCCwEzVxscWhg=="],
+    "graphql-request": ["graphql-request@7.4.0", "", { "dependencies": { "@graphql-typed-document-node/core": "^3.2.0" }, "peerDependencies": { "graphql": "14 - 16" } }, "sha512-xfr+zFb/QYbs4l4ty0dltqiXIp07U6sl+tOKAb0t50/EnQek6CVVBLjETXi+FghElytvgaAWtIOt3EV7zLzIAQ=="],
 
     "graphql-tag": ["graphql-tag@2.12.6", "", { "dependencies": { "tslib": "^2.1.0" }, "peerDependencies": { "graphql": "^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0" } }, "sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg=="],
 

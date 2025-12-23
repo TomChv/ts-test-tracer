@@ -24,9 +24,9 @@ let otelSDK: NodeSDK | undefined;
  * The configuration is based on standard OTEL environment
  * variables.
  */
-export function initialize(): void {
+export function initialize(): NodeSDK {
   if (otelSDK !== undefined) {
-    return;
+    return otelSDK;
   }
 
   const exporter = new OTLPTraceExporter();
@@ -40,6 +40,8 @@ export function initialize(): void {
   });
 
   otelSDK.start();
+
+  return otelSDK;
 }
 
 /**

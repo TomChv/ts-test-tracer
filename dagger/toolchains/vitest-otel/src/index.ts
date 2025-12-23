@@ -2,12 +2,11 @@ import {
   dag,
   Container,
   Directory,
-  File,
-  Changeset,
   object,
   func,
   argument,
   check,
+  Changeset,
   Secret,
 } from "@dagger.io/dagger";
 import { getTracer } from "@dagger.io/dagger/telemetry";
@@ -17,14 +16,14 @@ const NODE_IMAGE =
 const BUN_IMAGE =
   "oven/bun:1.3-alpine@sha256:d2bc1fbc3afcd3d70afc2bb2544235bf559caae2a3084e9abed126e233797511";
 
-const REPO_PKG_LOCATION = "packages/jest-test";
+const REPO_PKG_LOCATION = "packages/vitest-otel";
 const MOD_PKG_LOCATION = `/src/${REPO_PKG_LOCATION}`;
-const REPO_EXAMPLE_LOCATION = "examples/jest";
+const REPO_EXAMPLE_LOCATION = "examples/vitest";
 const MOD_EXAMPLE_LOCATION = `/src/${REPO_EXAMPLE_LOCATION}`;
 const MOD_INST_PKG_LOCATION = "/src/packages/instrumentation";
 
 @object()
-export class JestTest {
+export class VitestOtel {
   originalWorkspace: Directory;
 
   source: Directory;
@@ -38,12 +37,13 @@ export class JestTest {
       defaultPath: "/",
       ignore: [
         "*",
-        "!packages/jest-test",
-        "packages/jest-test/node_modules",
-        "packages/jest-test/dist",
-        "!examples/jest",
-        "examples/jest/**/node_modules",
-        "examples/jest/**/*.md",
+        "!packages/vitest-otel",
+        "packages/vitest-otel/node_modules",
+        "packages/vitest-otel/dist",
+        "!examples/vitest",
+        "examples/vitest/**/node_modules",
+        "examples/vitest/**/*.md",
+        "**/*.DS_Store"
       ],
     })
     workspace: Directory,
@@ -166,7 +166,7 @@ export class JestTest {
                 "npm",
                 "pkg",
                 "set",
-                "devDependencies[@otel-test-runner/jest-test]=../../../packages/jest-test",
+                "devDependencies[@otel-test-runner/vitest-otel]=../../../packages/vitest-otel",
               ])
               .withoutFile("package-lock.json");
           }
@@ -194,7 +194,7 @@ export class JestTest {
    * Generate functions
    ***********************/
   @func()
-  withBuild(): JestTest {
+  withBuild(): VitestOtel {
     this.source = this.devContainer()
       .withExec(["bun", "run", "build"])
       .directory(MOD_PKG_LOCATION);
@@ -203,7 +203,7 @@ export class JestTest {
   }
 
   @func()
-  withUpdatedLockefile(): JestTest {
+  withUpdatedLockefile(): VitestOtel {
     this.source = this.devContainer()
       .withExec(["bun", "install", "--lockfile-only"])
       .directory(MOD_PKG_LOCATION);
@@ -212,7 +212,7 @@ export class JestTest {
   }
 
   @func()
-  async withBumpedVersion(version: string): Promise<JestTest> {
+  async withBumpedVersion(version: string): Promise<VitestOtel> {
     this.source = this.devContainer()
       .withExec(["bun", "pm", "pkg", "set", `version=${version}`])
       .withExec([
@@ -236,7 +236,7 @@ export class JestTest {
           "npm",
           "pkg",
           "set",
-          `dependencies[@otel-test-runner/jest-test]=${version}`,
+          `dependencies[@otel-test-runner/vitest-otel]=${version}`,
         ]);
     }
 

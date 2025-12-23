@@ -5,7 +5,7 @@
     "": {
       "name": "@otel-test-runner/mocha-test",
       "dependencies": {
-        "@otel-test-runner/instrumentation": "0.2.3",
+        "@otel-test-runner/instrumentation": "0.3.1",
       },
       "devDependencies": {
         "@biomejs/biome": "2.3.7",
@@ -108,7 +108,7 @@
 
     "@opentelemetry/semantic-conventions": ["@opentelemetry/semantic-conventions@1.38.0", "", {}, "sha512-kocjix+/sSggfJhwXqClZ3i9Y/MI0fp7b+g7kCRm6psy2dsf8uApTRclwG18h8Avm7C9+fnt+O36PspJ/OzoWg=="],
 
-    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.2.3", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-lljaMwKA3d8zV8ZJsjuRP0cFRz+TXhnCUs6hJyoAr76CZ8OQkE3MKt9GBdDZB6vrBWdMLyan80CLu/OrZcuJ/A=="],
+    "@otel-test-runner/instrumentation": ["@otel-test-runner/instrumentation@0.3.1", "", { "dependencies": { "@opentelemetry/sdk-node": "^0.208.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-f2bRAGY/QXu8vKBHXLgOQTqdsQ+f1eo+z9eInw4X+DB9/lA2iNTXS8BJFM+5/AJjkfXFEPLobbqZpSyfqi6+cw=="],
 
     "@pkgjs/parseargs": ["@pkgjs/parseargs@0.11.0", "", {}, "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="],
 

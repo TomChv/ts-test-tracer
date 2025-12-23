@@ -1,6 +1,6 @@
 {
-  "name": "@otel-test-runner/mocha-test",
-  "description": "Mocha Test Runner with Open telemetry support for auto-instrumentation with dagger",
+  "name": "@otel-test-runner/vitest-otel",
+  "description": "Vitest Test Runner with Open telemetry support for auto-instrumentation with dagger",
   "author": "TomChv",
   "license": "MIT",
   "version": "0.3.1",
@@ -26,17 +26,16 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.7",
-    "@types/bun": "latest",
-    "@types/mocha": "^10.0.10",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
-    "tslib": "^2.8.1",
-    "rollup": "^4.53.3"
+    "@types/bun": "latest",
+    "rollup": "^4.53.3",
+    "tslib": "^2.8.1"
   },
   "peerDependencies": {
-    "typescript": "^5",
-    "mocha": "^11.7.5"
+    "@vitest/runner": "^4.0.16",
+    "typescript": "^5"
   },
   "dependencies": {
     "@otel-test-runner/instrumentation": "0.3.1"
@@ -46,7 +45,7 @@
     "url": "https://github.com/TomChv/ts-test-tracer/tree/main/packages/mocha-test"
   },
   "keywords": [
-    "mocha",
+    "vitest",
     "test",
     "dagger",
     "opentelemetry"

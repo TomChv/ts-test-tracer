@@ -10,6 +10,7 @@ import {
   BunTest,
   JestTest,
   MochaTest,
+  VitestOtel,
 } from "@dagger.io/dagger";
 import { getTracer } from "@dagger.io/dagger/telemetry";
 
@@ -65,11 +66,13 @@ export class Packages {
     // Sleep 3 seconds so the newly published lib can be downloaded.
     await Bun.sleep(3000);
 
-    let packages: Record<string, BunTest | JestTest | MochaTest> = {
-      bun: dag.bunTest(),
-      jest: dag.jestTest(),
-      mocha: dag.mochaTest(),
-    };
+    let packages: Record<string, BunTest | JestTest | MochaTest | VitestOtel> =
+      {
+        bun: dag.bunTest(),
+        jest: dag.jestTest(),
+        mocha: dag.mochaTest(),
+        vitest: dag.vitestOtel(),
+      };
 
     for (const name of Object.keys(packages)) {
       await getTracer().startActiveSpan(`release ${name}`, async () => {

@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "@dagger.io/dagger": "^0.19.7",
-    "@otel-test-runner/jest-test": "0.2.3"
+    "@otel-test-runner/jest-test": "0.3.1"
   }
 }
