@@ -1,0 +1,7 @@
+{
+  "name": "vitest-otel",
+  "engineVersion": "v0.19.8",
+  "sdk": {
+    "source": "typescript"
+  }
+}

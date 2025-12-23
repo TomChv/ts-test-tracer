@@ -1,4 +1,3 @@
-import { test as _test, type TestOptions } from "vitest";
 import * as optl from "@opentelemetry/api";
 
 import * as otr from "@otel-test-runner/instrumentation";
@@ -6,11 +5,11 @@ import * as otr from "@otel-test-runner/instrumentation";
 import { testTree } from "./test_tree";
 import { runTestInsideSpan } from "./tracer";
 
-export function wrapTestFunction(originalFunction: typeof _test): any {
+function wrapVitestFn(originalFunction: any): any {
   return (
     name: string,
-    fn: (...args: any[]) => any | Promise<any> | TestOptions,
-    options: (...args: any[]) => any | Promise<any> | TestOptions,
+    fn: (...args: any[]) => any | Promise<any> | any,
+    options: (...args: any[]) => any | Promise<any> | any,
   ) => {
     const node = testTree[testTree.length - 1];
     let opts = typeof fn === "function" ? options : fn;
@@ -32,4 +31,27 @@ export function wrapTestFunction(originalFunction: typeof _test): any {
       );
     });
   };
+}
+
+function decorate(original: any) {
+  const wrapped = wrapVitestFn(original);
+  if (original?.only) wrapped.only = wrapVitestFn(original.only);
+  if (original?.skip) wrapped.skip = wrapVitestFn(original.skip);
+  if (original?.concurrent)
+    wrapped.concurrent = wrapVitestFn(original.concurrent);
+  if (original?.sequential)
+    wrapped.sequential = wrapVitestFn(original.sequential);
+  if (original?.fails) wrapped.fails = wrapVitestFn(original.fails);
+  if (original?.todo) wrapped.todo = original.todo.bind(original);
+  if (original?.each) {
+    wrapped.each = (...templ: any[]) => {
+      const eachBase = original.each(...templ);
+      return wrapVitestFn(eachBase);
+    };
+  }
+  return wrapped;
+}
+
+export function instrumentVitestTestFn(testfn: any): any {
+  return decorate(testfn);
 }

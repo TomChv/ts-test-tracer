@@ -10,12 +10,44 @@ npm install @otel-test-runner/vitest-otel
 
 ### Usage
 
-Instead of using the global `it`, `describe` etc..., import them from `@otel-test-runner/vitest-otel`.
+Update `vitest.config.js` to use globals `js` and calling the setup files.
+
+```js
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    globals: true,
+    setupFiles: ["./vitest.setup.js"],
+  },
+});
+```
+
+This will add instrumentation for `test` and `describe` when using dagger.
+It cannot be use with the official `vitest` instrumentation because the traces
+will not be properly flushed by the auto support.
+
+```js
+//vitest.setup.ts
+import { test, describe } from "vitest";
+
+import {
+  instrumentVitestTestFn,
+  instrumentVitestDescribeFn,
+} from "@otel-test-runner/vitest-otel";
+import { sdk } from "@otel-test-runner/vitest-otel";
+
+globalThis.test = instrumentVitestTestFn(test);
+globalThis.describe = instrumentVitestDescribeFn(describe);
+
+globalThis.afterAll(async () => {
+  await sdk.shutdown();
+});
+```
+
+Use `test` and `describe` from global vitest.
 
 ```ts
-import assert from "node:assert";
-
-import { test, describe } from "@otel-test-runner/vitest-test";
 import { expect } from "vitest"
 
 test("single test", async () => {

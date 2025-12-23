@@ -2,11 +2,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    experimental: {
-      openTelemetry: {
-        enabled: true,
-        sdkPath: "./otel-sdk.js",
-      },
-    },
+    globals: true,
+    setupFiles: ["./vitest.setup.js"],
   },
 });
