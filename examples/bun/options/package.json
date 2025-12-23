@@ -11,6 +11,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@otel-test-runner/bun-test": "0.2.4"
+    "@otel-test-runner/bun-test": "0.3.1"
   }
 }

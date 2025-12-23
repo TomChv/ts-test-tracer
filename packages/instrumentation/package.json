@@ -3,7 +3,7 @@
   "description": "A utility package to setup OpenTelemetry on Typescript test runners",
   "author": "TomChv",
   "license": "MIT",
-  "version": "0.2.4",
+  "version": "0.3.1",
   "type": "module",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",

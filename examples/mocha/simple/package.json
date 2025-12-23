@@ -19,6 +19,6 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@otel-test-runner/mocha-test": "0.2.4"
+    "@otel-test-runner/mocha-test": "0.3.1"
   }
 }
