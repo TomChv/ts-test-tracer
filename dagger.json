@@ -21,6 +21,10 @@
     {
       "name": "packages",
       "source": "dagger/modules/packages"
+    },
+    {
+      "name": "vitest-otel",
+      "source": "dagger/toolchains/vitest-otel"
     }
   ]
 }

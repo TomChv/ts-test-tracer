@@ -12,8 +12,8 @@ function wrapVitestFn(originalFunction: any): any {
     options: (...args: any[]) => any | Promise<any> | any,
   ) => {
     const node = testTree[testTree.length - 1];
-    let opts = typeof fn === "function" ? options : fn;
-    let testFn = typeof fn === "function" ? fn : options;
+    const opts = typeof fn === "function" ? options : fn;
+    const testFn = typeof fn === "function" ? fn : options;
 
     return originalFunction(name, async function (this: any, ...args: any[]) {
       const parentCtx = node?.ctx ?? otr.injectTraceParentInContext();
@@ -37,10 +37,8 @@ function decorate(original: any) {
   const wrapped = wrapVitestFn(original);
   if (original?.only) wrapped.only = wrapVitestFn(original.only);
   if (original?.skip) wrapped.skip = wrapVitestFn(original.skip);
-  if (original?.concurrent)
-    wrapped.concurrent = wrapVitestFn(original.concurrent);
-  if (original?.sequential)
-    wrapped.sequential = wrapVitestFn(original.sequential);
+  if (original?.concurrent) wrapped.concurrent = wrapVitestFn(original.concurrent);
+  if (original?.sequential) wrapped.sequential = wrapVitestFn(original.sequential);
   if (original?.fails) wrapped.fails = wrapVitestFn(original.fails);
   if (original?.todo) wrapped.todo = original.todo.bind(original);
   if (original?.each) {

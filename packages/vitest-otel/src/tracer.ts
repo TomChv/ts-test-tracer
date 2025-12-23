@@ -11,19 +11,13 @@ export const tracer = otr.getTracer("test-tracer/vitest");
  * If we are already in a span, then the newly created span must be children
  * if the parent.
  */
-export async function runTestInsideSpan<T>(
-  name: string,
-  fn: () => T | Promise<T>,
-): Promise<T> {
+export async function runTestInsideSpan<T>(name: string, fn: () => T | Promise<T>): Promise<T> {
   const currentCtx = optl.context.active();
 
   if (optl.trace.getSpan(currentCtx) === undefined) {
-    return await optl.context.with(
-      otr.injectTraceParentInContext(),
-      async () => {
-        return tracer.startActiveSpan(name, async () => fn());
-      },
-    );
+    return await optl.context.with(otr.injectTraceParentInContext(), async () => {
+      return tracer.startActiveSpan(name, async () => fn());
+    });
   }
 
   return tracer.startActiveSpan(name, async () => fn());

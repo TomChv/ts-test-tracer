@@ -5,8 +5,8 @@ import * as otr from "@otel-test-runner/instrumentation";
  */
 export const sdk = otr.initialize();
 
+export { instrumentVitestDescribeFn } from "./describe_override";
 /**
  * Export vitest bindings with automatic tracing.
  */
 export { instrumentVitestTestFn } from "./test_override";
-export { instrumentVitestDescribeFn } from "./describe_override";
